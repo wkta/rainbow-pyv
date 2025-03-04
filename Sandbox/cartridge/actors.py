@@ -24,7 +24,7 @@ from . import glvars
 def new_color_viewer():
     data = {
         'curr_color_name': 'medium_gray',
-        'square_position': (325, 400, 80, 80)
+        'square_position': (300, 96, 45, 45)
     }
 
     # - behavior
