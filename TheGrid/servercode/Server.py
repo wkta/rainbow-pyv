@@ -5,8 +5,9 @@ from . import glvars
 from .NetwReadyModel import NetwReadyModel
 
 
-class ServerComponent:
-    def __init__(self):
+class Server:
+    def __init__(self, **kwargs):
+        print('object Server received:', kwargs)
         self._model = NetwReadyModel(None)
         self.mediator = glvars.mediator
 

@@ -6,7 +6,7 @@ from .world import blocks_create, player_create, ball_create
 pyv = glvars.pyv
 
 
-def init(vmst=None):
+def init(vmst, **kwargs):
 
     pyv.init(3, wcaption='Pyv Breaker')
     

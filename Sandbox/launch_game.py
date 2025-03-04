@@ -10,6 +10,8 @@ https://github.com/pyved-solution | Contact author: thomas.iw@kata.games
 import importlib.util
 import json
 import os
+import time
+
 
 bundle_name, link_to_glvars, pyved_engine_alias = None, None, 'pyved_engine'
 
@@ -31,7 +33,7 @@ def prep_libs(cb_func, rel_import_flag, plugins_list):
         cb_func(alias, plugin_name, plugin_module)
 
 
-def game_execution(metadata, gdef_module):
+def game_execution(metadata, gdef_module, **kwargs):
     global link_to_glvars, pyved_engine_alias
 
     def find_folder(givenfolder, start_path):
@@ -61,37 +63,89 @@ def game_execution(metadata, gdef_module):
     pyv.run_game(
         getattr(gdef_module, 'init'),
         getattr(gdef_module, 'update'),
-        getattr(gdef_module, 'close')
+        getattr(gdef_module, 'close'),
+        **kwargs
     )
 
 
-def bootgame(metadata):
+def boot_game(mdata_path, **kwargs):
     global bundle_name, link_to_glvars
-    try:
-        from cartridge import glvars as c_glvars
-        rel_imports = False
-    except ModuleNotFoundError:
-        from .cartridge import glvars as c_glvars
-        rel_imports = True
-    link_to_glvars = c_glvars  # glvars becomes available elsewhere
-    lib_list = list()
-    for lib_id in metadata['dependencies'].keys():
-        if len(metadata['dependencies'][lib_id]) > 1:
-            alias = metadata['dependencies'][lib_id][1]
-            lib_list.append((alias, lib_id))
+
+    with open(mdata_path, 'r') as fp:
+        metadata = json.load(fp)
+
+        try:
+            from cartridge import glvars as c_glvars
+            rel_imports = False
+        except ModuleNotFoundError:
+            from .cartridge import glvars as c_glvars
+            rel_imports = True
+        link_to_glvars = c_glvars  # glvars becomes available elsewhere
+        lib_list = list()
+        for lib_id in metadata['dependencies'].keys():
+            if len(metadata['dependencies'][lib_id]) > 1:
+                alias = metadata['dependencies'][lib_id][1]
+                lib_list.append((alias, lib_id))
+            else:
+                lib_list.append((lib_id, lib_id))
+        bundle_name = metadata['slug']
+        prep_libs(c_glvars.register_lib, rel_imports, lib_list)
+        if c_glvars.has_registered('network'):  # manually fix the network lib (retro-compat)
+            getattr(c_glvars, c_glvars.get_alias('network')).slugname = metadata['slug']
+        if not rel_imports:
+            from cartridge import gamedef
         else:
-            lib_list.append((lib_id, lib_id))
-    bundle_name = metadata['slug']
-    prep_libs(c_glvars.register_lib, rel_imports, lib_list)
-    if c_glvars.has_registered('network'):  # manually fix the network lib (retro-compat)
-        getattr(c_glvars, c_glvars.get_alias('network')).slugname = metadata['slug']
-    if not rel_imports:
-        from cartridge import gamedef
-    else:
-        from .cartridge import gamedef
-    game_execution(metadata, gamedef)
+            from .cartridge import gamedef
+        game_execution(metadata, gamedef, **kwargs)
 
 
-if __name__ == '__main__':  # for  a"pyv-cli less" execution
-    with open('cartridge/metadat.json', 'r') as fp:
-        bootgame(json.load(fp))
+def server_execution(**kwargs):
+    print("Starting server...")
+    from servercode import glvars
+    print(glvars.pyv)
+    # Insert your server initialization and main loop logic here.
+    # For example, setting up network connections, initializing services, etc.
+
+    # handy linking.
+    # But could it work with trascrypt'pragmas'?
+    # from netw_socket_serv import *
+    # precursor = {
+    #     'get_server_flag': get_server_flag,     # server-side, its like a constant but ok we need it
+    #     'start_comms': start_comms,             # called in the server's body -->ok can stay pure JS
+    #     'broadcast': broadcast,                 # called by UMediator only. Line 76
+    #     'register_mediator': register_mediator  # called only by UMediator line 15, so mediator can receive post call in return
+    # }
+    # class Objectifier:
+    #     def __init__(self, **entries):
+    #         self.__dict__.update(entries)
+    # netw_layer = Objectifier(**precursor)
+    # --- end handy linking ---
+    engine_elem = glvars.pyv.neotech
+
+    netw_layer = engine_elem.Objectifier(**engine_elem.build_net_layer('socket', 'server'))
+    glvars.mediator = mediator = engine_elem.UMediator()
+    mediator.set_network_layer(netw_layer)
+
+    # je crois qu'il faut attendre de s'etre register sur netlayer avant de start comms
+    # sinon liste des mediators est vide
+    netw_layer.start_comms(kwargs['host'], kwargs['port'])
+
+    from servercode.Server import Server
+    serv_obj = Server(**kwargs)
+
+    ff = 1
+    cpt = 100
+    while True:
+        serv_obj.proc_server_logic(time.time())
+        glvars.mediator.update(True)  # saving cycles will send updates less frequently which can avoir sync errors
+        # on socket interface, but creates a bit of lag
+        cpt -= 1
+        if cpt <= 0:
+            ff = ff ^ 1  # flip bit
+            print('  .tick. ' if ff else ' .tac. ')
+            cpt = 100
+        time.sleep(0.1)
+
+
+if __name__ == '__main__':  # in case of a "pyv-cli less" execution
+    boot_game('cartridge/metadat.json')

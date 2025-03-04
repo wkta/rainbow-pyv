@@ -18,20 +18,29 @@ USER_COMMANDS = {
     # local_pl, remote_pl = 'p1', 'p2'
 # else:
     # local_pl, remote_pl = 'p2', 'p1'
-local_pl, remote_pl =  'p1','p2'
+local_pl = remote_pl =  None
+
 GS_HOST = 'localhost'
 GS_PORT = 60111
 
 ref_cc = None
 
-def init(vmst=None):
-    global ref_cc
+def init(vmst, **kwargs):
+    global ref_cc, local_pl, remote_pl
     pyv.init(4, wcaption='Roguelike actor-based')
     glvars.screen = pyv.get_surface()
     
+    if kwargs['player']==1:
+        local_pl, remote_pl =  'p1','p2'
+    elif kwargs['player']==2:
+        local_pl, remote_pl =  'p2','p1'
+    print('local player well set')
     # init network comms, create a model, and force sync it
     netlayer = pyv.neotech.Objectifier(**pyv.neotech.build_net_layer('socket', 'client'))
-    netlayer.start_comms(GS_HOST, GS_PORT)
+    netlayer.start_comms(
+        kwargs['host'],
+        kwargs['port']
+    )
 
     mediator = pyv.neotech.UMediator()
 

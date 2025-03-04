@@ -28,7 +28,7 @@ def _prepare_images():
     glvars.monster_img.set_colorkey((255, 0, 255))
 
 
-def init(vmst=None):
+def init(vmst, **kwargs):
     pyv.init(3, wcaption='Roguelike actor-based')
 
     _prepare_images()

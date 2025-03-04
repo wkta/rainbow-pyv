@@ -9,7 +9,7 @@ from .actors import *
 
 # -----
 #  declare the 3 main functions (mandatory)
-def init(vmst=None):
+def init(vmst, **kwargs):
     pyv.init(4, wcaption='Untitled, empty, and pyved-based demo')
     # declare your custom events here
     pyv.actors.declare_evs(
