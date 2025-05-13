@@ -1,11 +1,11 @@
 {
   "vmlib_ver": "25_3a1",
-  "dependencies": {
-    "pyved_engine": [
+  "dependencies": [
+    ["pyved_engine",
       "25_3a1",
-      "pyv"
-    ]
-  },
+      "pyv"]
+  ],
+  "frozen": false,
   "description": "Basic template for a roguelike/dungeon-crawling game",
   "author": "Unknown",
   "asset_base_folder": ".",
