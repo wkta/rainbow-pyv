@@ -1,0 +1,6 @@
+
+NETW_RESET, \
+    NETW_PUSH_MAP_TOPO, \
+    NETW_ASK_MAP_TOPO, \
+    NETW_PUSH_LAND_ST, \
+    NETW_ASK_LAND_ST = range(9234, 9234 + 5)

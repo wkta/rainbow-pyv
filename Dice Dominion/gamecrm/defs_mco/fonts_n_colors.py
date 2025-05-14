@@ -1,0 +1,52 @@
+my_fonts = {
+    'courier_font': (None, 22),  #('couriernew.ttf', 16),
+    # 'default_big_font': ('freesansbold.ttf', 44),
+
+    'default_med_font': (None, 27),  #'alphbeta.ttf', 16),  # 2e valeur = taille
+
+    # 'default_small_font': ('freesansbold.ttf', 17),
+    # 'default_med_font': ('freesansbold.ttf', 24),
+    # 'default_very_small_font': ('freesansbold.ttf', 14),
+    # 'fixed_title_font': ('alphbeta.ttf', 37),
+    # 'pxled_med_font': ('alphbeta.ttf', 22),
+    # 'pxled_med_font_big': ('alphbeta.ttf', 25),
+    # 'tiny_font': ('alphbeta.ttf', 13),
+    # 'trigger_font': ('freesansbold.ttf', 12),
+    # 'med_pesos_display_font': ('freesansbold.ttf', 20),
+    'big_pesos_display_font': (None, 33)  #('freesansbold.ttf', 30),
+}
+
+my_colors = {
+    'orange_vif': '#f38200',
+    'gris_clair': '#f2f2f2',
+    'gris_leger': '#dddddd',
+    'gris_fonce': '#838383',
+    'bleu_ciel': '#6f95c6',
+    'fond_anto': '#330000',
+    'bleu': 'blue',
+    'bleu_gris': '#33506e',
+    'rouge_flashy': '#cf0903',
+    'rouge_sombre': '#69070c',
+    'rouge': 'red',
+    'vert': 'green',
+    'verte': 'green',
+    'noir': 'black',
+    'orange': 'orange',
+    'blanc': 'white',
+    'rose': 'pink',
+    'beige': '#df9e4e',
+    'creme': '#eacc98',
+    'gris_taupe': '#242424',
+    'or': '#FFB303',
+    'or_fonce': '#8b6714',
+    'sang': '#7e0e0e',
+    'fond_combat': '#e5d8bc',
+    'vert_leger': '#6dc066',
+    'rouge_leger': '#e85d66',
+    'brun': '#462600',
+    'brun_clair': '#bca594',
+    'deep_purple': '#713368',
+    'gris_crypto': '#acacac',
+    'turquoise': '#00b3dc',
+    'blanc_casse': '#deeed6'
+}
