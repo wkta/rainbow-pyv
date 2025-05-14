@@ -43,7 +43,7 @@ disp_order_WEDGE_COLORS = [RED, GREEN, BLUE, ORANGE, PEACH, WHITE]
 WEDGE_COLORS = [WHITE, RED, GREEN, BLUE, ORANGE, PEACH]
 WEDGE_COLORS.reverse()
 ANGLE_PER_WEDGE = 360 / NUM_WEDGES
-WHEEL_RADIUS = 200
+WHEEL_RADIUS = 144  # org value:200 before may25
 angles_thresholds = [(i * ANGLE_PER_WEDGE - 30, i * ANGLE_PER_WEDGE + 30) for i in range(6)]
 wealth = 0
 wealth_label = None
@@ -101,7 +101,7 @@ def draw_wheel(center_x, center_y, angle):
         end_y = center_y + WHEEL_RADIUS * math.sin(end_angle)
         # Draw the wedge
         points = [(center_x, center_y), (start_x, start_y), (end_x, end_y)]
-        pygame.draw.polygon(screen, disp_order_WEDGE_COLORS[i], points)
+        pyv.draw_polygon(screen, disp_order_WEDGE_COLORS[i], points)
 
 
 def get_wcolor_under_cursor(curr_angle):
@@ -129,7 +129,9 @@ def paint_game(scr):
     center_x, center_y = WIDTH // 2, HEIGHT // 2
     draw_wheel(center_x, center_y, current_angle)
     # Draw the cursor
-    pygame.draw.polygon(screen, CURSOR_COL, [(center_x - 10, 50), (center_x + 10, 50), (center_x, 90)])
+    yinf = 11
+    cursor_spike_factor = 25
+    pyv.draw_polygon(screen, CURSOR_COL, [(center_x - 10, yinf), (center_x + 10, yinf), (center_x, yinf+cursor_spike_factor)])
     if tmp_disp:
         screen.blit(tmp_disp, LABEL_POS)
     if wealth_label:
@@ -222,16 +224,19 @@ def update(time_info=None):
 
     wanna_spin = False
     
-    # TODO ------------ fix use of events with pyv ---------
     # the right way to do stuff is:
     for ev in pyv.event_get():
         if ev.type == pyv.EngineEvTypes.Quit:
             pyv.vars.gameover = True
-        # etc.
-        # elif ev.type == pyv.EngineEvTypes.Mousedown:
-
-    # --- old and bad:
+        elif ev.type == pyv.EngineEvTypes.Keydown:
+            if ev.key == pyv.K_ESCAPE:
+                pyv.vars.gameover = True
+            elif ev.key == pyv.K_SPACE:
+                wanna_spin = True
+        elif ev.type == pyv.EngineEvTypes.Mousedown:
+            wanna_spin = True  # manage mouse clicking
     
+    # --- old and bad:
     # for ev in pyv.event_get():
         # if ev.type == pyv.event.QUIT:
             # pyv.vars.gameover = True  # manage game exit
