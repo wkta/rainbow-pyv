@@ -1,6 +1,6 @@
 # those two lines are useful if running without PyCharm /proper "Content Root" settings...
 import sys
-sys.path.append('../vendor')
+sys.path.append('../pytooling')
 
 from coremon_main.util import underscore_format
 import os

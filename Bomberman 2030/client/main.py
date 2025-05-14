@@ -1,6 +1,6 @@
 import sys
 
-# sys.path.append('../vendor')
+sys.path.append('../pytooling')
 import coremon_main
 import glvars
 from coremon_main.runners import StackBasedGameCtrl
