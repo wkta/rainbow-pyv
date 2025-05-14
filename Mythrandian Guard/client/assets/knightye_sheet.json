@@ -1,0 +1,11 @@
+{
+	"tilesize":[182,123],
+	"colorkey":"#ff00ff",
+	"padding":5,
+	"animations":{
+		"idle":{"seq":[0,1,2,3,4,5],"delay":150},
+		"attack":{"seq":[6,7,8,9,10,11],"delay":125},
+		"defend":{"seq":[12,13,14,15,16,17,18,19,20],"delay":100},
+		"getsHit":{"seq":"21-", "delay": 50}
+	}
+}

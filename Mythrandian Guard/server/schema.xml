@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" namespace="\datab" defaultPhpNamingMethod="underscore">
+  <table name="player" idMethod="native" phpName="Player">
+    <column name="pid" phpName="Pid" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="16" required="true"/>
+    <column name="pwd_hash" phpName="PwdHash" type="VARCHAR" size="64" required="true"/>
+    <column name="ts_auth" phpName="TsAuth" type="TIMESTAMP" required="true" defaultExpr="CURRENT_TIMESTAMP"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+</database>

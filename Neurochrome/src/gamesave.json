@@ -1,0 +1,39 @@
+{
+    "gun_data": {
+        "0": {
+            "bullet_speed": 10,
+            "cooldown": 300,
+            "damage": 20,
+            "img": "img/bullets/bullet_0.png",
+            "gun_img": "img/weapons/gun_sprites/blaster.png",
+            "sfx": "audio/sfx/blaster.wav"
+        }
+    },
+    "pickup_data": {
+        "hovering": true,
+        "tracker": true,
+        "double_jump": true
+    },
+    "map_data": {
+        "13": true,
+        "12": true
+    },
+    "extra_healths_data": {
+        "2": true
+    },
+    "neobit_data": {
+        "neobits": 136
+    },
+    "health_data": {
+        "max_health": 350
+    },
+    "additional_data": {
+        "save_point": 13,
+        "block_position": [
+            200,
+            400
+        ],
+        "current_gun": 0,
+        "gun_showing": false
+    }
+}

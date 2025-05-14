@@ -1,0 +1,1 @@
+you should create symlink between this folder and ../src/img folder. Will be easier to edit TMX maps
