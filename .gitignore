@@ -1,3 +1,10 @@
+# Ignore Python-related files
 .idea
 *.pyc
 __pycache__/
+venv/
+
+# Ignore PHP-related files and composer/vendor directories
+/composer.phar
+composer.lock
+/vendor/
