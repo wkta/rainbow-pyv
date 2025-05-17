@@ -1,8 +1,8 @@
 import json
 import random
 
-from . import glvars
-from .NetwReadyModel import NetwReadyModel
+from .shared_code import glvars
+from .shared_code.NetwReadyModel import NetwReadyModel
 
 
 class Server:

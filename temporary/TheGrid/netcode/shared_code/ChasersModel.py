@@ -3,7 +3,7 @@ import random
 
 from . import glvars
 
-EventReadyCls = glvars.pyv.neotech.EventReadyCls
+EventReadyCls = glvars.pyv.umediator.EventReadyCls
 
 
 class ChasersModel(EventReadyCls):

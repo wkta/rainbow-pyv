@@ -1,7 +1,10 @@
 from . import glvars
 
-from .NetwReadyModel import NetwReadyModel
-pyv = glvars.pyv
+# because we'll use the shared_code, we have to copy the ref from glvars to netcode.shared_code.glvars
+from .netcode.shared_code import glvars as netcode_glvars
+pyv = netcode_glvars.pyv = glvars.pyv
+
+from .netcode.shared_code.NetwReadyModel import NetwReadyModel
 
 
 E_COLOR = {'p1': 'blue', 'p2': 'red', 'ai': 'green'}

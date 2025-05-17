@@ -36,13 +36,13 @@ def init(vmst, **kwargs):
         local_pl, remote_pl =  'p2','p1'
     print('local player well set')
     # init network comms, create a model, and force sync it
-    netlayer = pyv.neotech.Objectifier(**pyv.neotech.build_net_layer('socket', 'client'))
+    netlayer = pyv.umediator.Objectifier(**pyv.umediator.build_net_layer('socket', 'client'))
     netlayer.start_comms(
         kwargs['host'],
         kwargs['port']
     )
 
-    mediator = pyv.neotech.UMediator()
+    mediator = pyv.umediator.UMediator()
 
     mediator.set_network_layer(netlayer)
     pyv.use_mediator(mediator)
