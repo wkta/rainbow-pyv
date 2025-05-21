@@ -23,9 +23,12 @@ def exec(**kwargs):
     # netw_layer = Objectifier(**precursor)
     # --- end handy linking ---
     neotech = glvars.pyv.umediator
-
+    netlayer_type = 'socket'
+    if 'mode' in kwargs:
+        if 'ws'==kwargs['mode']:
+            netlayer_type = 'ws'
     netw_layer = neotech.Objectifier(
-        **neotech.build_net_layer('socket', 'server')  # this line is where we choose what netw transport layer we are using
+        **neotech.build_net_layer(netlayer_type, 'server')  # this line is where we choose what netw transport layer we are using
     )
     glvars.mediator = mediator = neotech.UMediator()  # new kind of mediator
 
@@ -56,6 +59,6 @@ def exec(**kwargs):
             print('now exiting...')
             stop_serv = True
     # after leaving the refresh loop, one also, NEEDS to close socket, bc it is blocking reads
-    print('comms->shutdown!')
+    print('do: comms->shutdown command on the netw_layer...')
     netw_layer.shutdown_comms()
  

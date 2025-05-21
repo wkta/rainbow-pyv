@@ -36,7 +36,11 @@ def init(vmst, **kwargs):
         local_pl, remote_pl =  'p2','p1'
     print('local player well set')
     # init network comms, create a model, and force sync it
-    netlayer = pyv.umediator.Objectifier(**pyv.umediator.build_net_layer('socket', 'client'))
+    netlayer_type = 'socket'
+    if 'mode' in kwargs:
+        if 'ws'==kwargs['mode']:
+            netlayer_type = 'ws'
+    netlayer = pyv.umediator.Objectifier(**pyv.umediator.build_net_layer(netlayer_type, 'client'))
     netlayer.start_comms(
         kwargs['host'],
         kwargs['port']
