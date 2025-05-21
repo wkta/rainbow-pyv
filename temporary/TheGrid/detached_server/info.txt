@@ -1,0 +1,11 @@
+REFERENCE DOCS:
+---------------
+
+freezing a bundle, then copying the source-code of the engine and put it along the netcode 
+of a game,
+
+produces a DETACHED SERVER
+
+inside the folder you'll always find: main.py, the netcode folder, the pyved_engine folder.
+
+The DETACHED SERVER format allows for fast game server deployment.
