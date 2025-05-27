@@ -32,14 +32,25 @@
     "Experimental"
   ],
   "source_files": [
-    "gamedef.py",
+	"extra_vars.py",
+	"GameClientPlusGUI.py",
+	"gamedef.py",
     "glvars.py",
-    "shared.py",
+    
     "actors/__init__.py",
     "actors/maze.py",
     "actors/misc.py",
     "actors/monsters.py",
     "actors/player.py",
-    "actors/visibility_mger.py"
+    "actors/visibility_mger.py",
+	
+	"netcode/__init__.py",
+	"netcode/run_server.py",
+	"netcode/Server.py",
+	
+	"netcode/shared_code/__init__.py",
+	"netcode/shared_code/ChasersModel.py",
+	"netcode/shared_code/glvars.py",
+	"netcode/shared_code/NetwReadyModel.py"
   ]
 }
