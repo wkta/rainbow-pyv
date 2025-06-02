@@ -22,16 +22,17 @@ def exec(**kwargs):
     #         self.__dict__.update(entries)
     # netw_layer = Objectifier(**precursor)
     # --- end handy linking ---
-    neotech = glvars.pyv.umediator
+    pyv = glvars.pyv
+
+    neotech = pyv.umediator
     netlayer_type = 'socket'
     if 'mode' in kwargs:
         if 'ws'==kwargs['mode']:
             netlayer_type = 'ws'
-    netw_layer = neotech.Objectifier(
-        **neotech.build_net_layer(netlayer_type, 'server')  # this line is where we choose what netw transport layer we are using
+    netw_layer = pyv.netlayer_factory.build_netlayer(
+        netlayer_type, 'server'  # this line is where we choose what netw transport layer we are using
     )
     glvars.mediator = mediator = neotech.UMediator()  # new kind of mediator
-
     mediator.set_network_layer(netw_layer)  # bind mediator to this netw transport layer!
 
     # it's only after binding that we can call "start_comms",

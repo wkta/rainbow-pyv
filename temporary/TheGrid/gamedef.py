@@ -27,28 +27,20 @@ ref_cc = None
 
 def init(vmst, **kwargs):
     global ref_cc, local_pl, remote_pl
-    pyv.init(4, wcaption='Roguelike actor-based')
+    pyv.init(4)
     glvars.screen = pyv.get_surface()
     
     if kwargs['player']==1:
         local_pl, remote_pl =  'p1','p2'
     elif kwargs['player']==2:
         local_pl, remote_pl =  'p2','p1'
-    print('local player well set')
-    # init network comms, create a model, and force sync it
-    netlayer_type = 'socket'
-    if 'mode' in kwargs:
-        if 'ws'==kwargs['mode']:
-            netlayer_type = 'ws'
-    netlayer = pyv.umediator.Objectifier(**pyv.umediator.build_net_layer(netlayer_type, 'client'))
-    netlayer.start_comms(
+    print(' [game client TheGrid] local player well set, player==', local_pl)
+    pyv.netlayer.start_comms(
         kwargs['host'],
         kwargs['port']
     )
 
     mediator = pyv.umediator.UMediator()
-
-    mediator.set_network_layer(netlayer)
     pyv.use_mediator(mediator)
     glvars.mediator = mediator
 
