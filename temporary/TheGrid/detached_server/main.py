@@ -14,7 +14,7 @@ glvars.pyv.server_flag=True
 # as long as you dont booststrap you cant use .umediator etc
 glvars.pyv.bootstrap_e()
 
-PORTINFO = os.getenv('PORT')
-HOSTINFO = os.getenv('IP')
+PORTINFO = 12881#os.getenv('PORT')
+HOSTINFO = 'localhost'#os.getenv('IP')
 print('starting game server,',PORTINFO,';',HOSTINFO)
 run_server.exec(**{'port':PORTINFO,'host':HOSTINFO,'mode':'ws'})
